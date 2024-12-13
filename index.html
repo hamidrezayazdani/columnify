@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Columnify - Advanced Table Column Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./columnify.css" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-color: #3b82f6;
+        --secondary-color: #10b981;
+        --background-light: #f3f4f6;
+        --text-dark: #1f2937;
+        --border-color: #e5e7eb;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .demo-section {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 2rem;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+
+      .demo-section:hover {
+        transform: translateY(-5px);
+      }
+
+      .demo-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background-color: var(--background-light);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .demo-section h2 {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .demo-section-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 1rem;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background-color: var(--background-light);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: #4b5563;
+      }
+
+      tr:hover {
+        background-color: #f9fafb;
+      }
+
+      .code-tag {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        margin-left: 10px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .page-header {
+          padding: 1rem;
+        }
+
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .demo-section-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .demo-section h2 {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      /* Subtle animation for table rows */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      tbody tr {
+        animation: fadeIn 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      tbody tr:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      tbody tr:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      /* RTL specific styles */
+      [dir="rtl"] {
+        text-align: right;
+      }
+
+      [dir="rtl"] th,
+      [dir="rtl"] td {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <h1>Columnify</h1>
+        <p>Advanced Table Column Visibility Management</p>
+      </header>
+
+      <div class="demo-section" id="basic-toggle-demo">
+        <div class="demo-section-header">
+          <div>
+            <h2>
+              User Management Table
+              <span class="code-tag">Toggle Selector</span>
+            </h2>
+            <p class="demo-section-description">
+              Simple table with toggle-based column selector
+            </p>
+          </div>
+        </div>
+        <table id="basicToggleTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Doe</td>
+              <td>john.doe@example.com</td>
+              <td>555-1234</td>
+              <td>Sales</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jane Smith</td>
+              <td>jane.smith@example.com</td>
+              <td>555-5678</td>
+              <td>Marketing</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="demo-section" id="dropdown-demo">
+        <div class="demo-section-header">
+          <div>
+            <h2>
+              Financial Report <span class="code-tag">Dropdown Selector</span>
+            </h2>
+            <p class="demo-section-description">
+              Advanced financial data with dropdown column management
+            </p>
+          </div>
+        </div>
+        <table id="financialReportTable">
+          <thead>
+            <tr>
+              <th>Quarter</th>
+              <th>Revenue</th>
+              <th>Expenses</th>
+              <th>Profit</th>
+              <th>Margin %</th>
+              <th>Growth Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Q1 2024</td>
+              <td>$500,000</td>
+              <td>$350,000</td>
+              <td>$150,000</td>
+              <td>30%</td>
+              <td>5.2%</td>
+            </tr>
+            <tr>
+              <td>Q2 2024</td>
+              <td>$550,000</td>
+              <td>$375,000</td>
+              <td>$175,000</td>
+              <td>31.8%</td>
+              <td>6.7%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="demo-section" id="responsive-demo">
+        <div class="demo-section-header">
+          <div>
+            <h2>
+              Product Inventory <span class="code-tag">Mobile Responsive</span>
+            </h2>
+            <p class="demo-section-description">
+              Inventory management with mobile-specific column selector
+            </p>
+          </div>
+        </div>
+        <table id="productInventoryTable">
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Stock</th>
+              <th>Price</th>
+              <th>Supplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PROD001</td>
+              <td>Wireless Headphones</td>
+              <td>Electronics</td>
+              <td>150</td>
+              <td>$99.99</td>
+              <td>TechGear Inc.</td>
+            </tr>
+            <tr>
+              <td>PROD002</td>
+              <td>Smart Watch</td>
+              <td>Wearables</td>
+              <td>75</td>
+              <td>$199.99</td>
+              <td>InnoTech Solutions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="demo-section" id="rtl-demo">
+        <div class="demo-section-header">
+          <div>
+            <h2>
+              Arabic Order Management <span class="code-tag">RTL Support</span>
+            </h2>
+            <p class="demo-section-description">
+              Right-to-Left language table with full internationalization
+            </p>
+          </div>
+        </div>
+        <table id="arabicTable" dir="rtl">
+          <thead>
+            <tr>
+              <th>رقم الطلب</th>
+              <th>اسم العميل</th>
+              <th>المنتج</th>
+              <th>السعر</th>
+              <th>التاريخ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>١٢٣٤</td>
+              <td>محمد أحمد</td>
+              <td>لابتوب</td>
+              <td>٥٠٠٠ ريال</td>
+              <td>١٥ يناير ٢٠٢٤</td>
+            </tr>
+            <tr>
+              <td>٥٦٧٨</td>
+              <td>فاطمة علي</td>
+              <td>هاتف ذكي</td>
+              <td>٣٠٠٠ ريال</td>
+              <td>٢٠ فبراير ٢٠٢٤</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="./columnify.js"></script>
+
+    <script>
+      // 1. Basic Toggle Selector
+      new Columnify({
+        tableSelector: "#basicToggleTable",
+        selectorLayout: "toggle",
+        requiredColumns: [0],
+        responsiveMode: false,
+        mobileBreakpoint: 768,
+      });
+
+      // 2. Dropdown Selector with Advanced Options
+      new Columnify({
+        tableSelector: "#financialReportTable",
+        selectorLayout: "dropdown",
+        requiredColumns: [0],
+        initialVisibleColumns: [0, 1, 2, 3],
+        responsiveMode: false,
+        mobileBreakpoint: 768,
+        i18n: {
+          selectColumns: "Select Financial Columns",
+          selectedColumns: "{count} Columns Selected",
+        },
+      });
+
+      // 3. Responsive Mobile-Only Selector
+      new Columnify({
+        tableSelector: "#productInventoryTable",
+        selectorLayout: "toggle", // Changed to toggle for better mobile experience
+        responsiveMode: true, // Enable responsive mode
+        requiredColumns: [0],
+        mobileBreakpoint: 768, // Specify mobile breakpoint
+      });
+
+      // 4. RTL (Right-to-Left) Language Support
+      new Columnify({
+        tableSelector: "#arabicTable",
+        selectorLayout: "dropdown",
+        requiredColumns: [0],
+        initialVisibleColumns: [0, 1, 2],
+        responsiveMode: false, // Added responsive mode
+        i18n: {
+          selectColumns: "اختيار الأعمدة",
+          selectedColumns: "تم اختيار {count} عمود",
+        },
+      });
+    </script>
+  </body>
+</html>

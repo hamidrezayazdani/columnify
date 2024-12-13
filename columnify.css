@@ -1,0 +1,288 @@
+/* Columnify Styles with Unique Namespacing */
+:root {
+  --columnify-primary-color: #3498db;
+  --columnify-background-light: #f8f9fa;
+  --columnify-background-dark: #f1f3f5;
+  --columnify-text-color: #2c3e50;
+  --columnify-border-color: #e0e4e8;
+  --columnify-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.columnify-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: var(--columnify-background-light);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: var(--columnify-transition);
+}
+
+.columnify-selector:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.columnify-dropdown {
+  position: relative;
+  width: 280px;
+}
+
+.columnify-dropdown .columnify-dropdown-trigger {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: white;
+  border: 2px solid var(--columnify-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 500;
+  color: var(--columnify-text-color);
+  transition: var(--columnify-transition);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.columnify-dropdown .columnify-dropdown-trigger:hover {
+  border-color: var(--columnify-primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.columnify-dropdown .columnify-dropdown-trigger::after {
+  content: "▼";
+  font-size: 0.7em;
+  color: var(--columnify-primary-color);
+  transition: transform 0.3s ease;
+}
+
+.columnify-dropdown.columnify-open .columnify-dropdown-trigger::after {
+  transform: rotate(180deg);
+}
+
+.columnify-dropdown .columnify-dropdown-content {
+  display: none;
+  position: fixed;
+  background-color: white;
+  border: 2px solid var(--columnify-border-color);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 15px;
+  opacity: 0;
+  transition: var(--columnify-transition);
+}
+
+.columnify-dropdown.columnify-open .columnify-dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.columnify-dropdown-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  transition: var(--columnify-transition);
+}
+
+.columnify-dropdown-item:hover {
+  background-color: var(--columnify-background-dark);
+  border-radius: 4px;
+}
+
+.columnify-dropdown-item input[type="checkbox"] {
+  margin-right: 10px;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--columnify-border-color);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: var(--columnify-transition);
+}
+
+.columnify-dropdown-item input[type="checkbox"]:checked {
+  background-color: var(--columnify-primary-color);
+  border-color: var(--columnify-primary-color);
+  position: relative;
+}
+
+.columnify-dropdown-item input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+}
+
+.columnify-dropdown-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--columnify-border-color);
+}
+
+.columnify-dropdown-actions button {
+  padding: 8px 15px;
+  background-color: var(--columnify-background-dark);
+  border: 1px solid var(--columnify-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--columnify-text-color);
+  transition: var(--columnify-transition);
+}
+
+.columnify-dropdown-actions button:hover {
+  background-color: var(--columnify-primary-color);
+  color: white;
+  border-color: var(--columnify-primary-color);
+}
+
+.columnify-selector.columnify-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.columnify-selector.columnify-rtl .columnify-dropdown-trigger {
+  text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .columnify-selector {
+    flex-direction: column;
+  }
+
+  .columnify-dropdown {
+    width: 100%;
+  }
+}
+
+.columnify-dropdown .columnify-dropdown-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.columnify-dropdown .columnify-dropdown-content::-webkit-scrollbar-track {
+  background: var(--columnify-background-light);
+  border-radius: 4px;
+}
+
+.columnify-dropdown .columnify-dropdown-content::-webkit-scrollbar-thumb {
+  background: var(--columnify-primary-color);
+  border-radius: 4px;
+}
+
+.columnify-controls {
+  margin-bottom: 1rem;
+}
+
+.columnify-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.columnify-button {
+  padding: 8px 16px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.columnify-button:hover {
+  background: #e0e0e0;
+}
+
+.columnify-dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  min-width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.columnify-dropdown.active .columnify-dropdown-content {
+  opacity: 1;
+  display: block;
+}
+
+.columnify-checkbox {
+  display: block;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.columnify-checkbox:hover {
+  background: #f5f5f5;
+}
+
+.columnify-controls-buttons {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  gap: 8px;
+}
+
+.columnify-controls-buttons button {
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.columnify-controls-buttons button:hover {
+  background: #e0e0e0;
+}
+
+/* Toggle Styles */
+.columnify-toggle {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.columnify-toggle input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.columnify-toggle label {
+  cursor: pointer;
+}
+
+.columnify-controls-buttons {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  gap: 8px;
+}
+
+.columnify-controls-buttons button {
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.columnify-controls-buttons button:hover {
+  background: #e0e0e0;
+}
